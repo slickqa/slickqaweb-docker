@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+mongoprocess = subprocess.Popen(['/usr/bin/mongod'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+for line in iter(mongoprocess.stdout.readline, ''):
+    print line.rstrip()
+    sys.stdout.flush()
+    if 'waiting for connections' in line:
+        subprocess.call(['/usr/bin/mongo', 'localhost/slickij', '/var/lib/slick/amqpconfig.js'])
+        mongoprocess.terminate()
+
+

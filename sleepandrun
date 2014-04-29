@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sleep $1
+
+ARGS="$@"
+${ARGS[@]:1}
